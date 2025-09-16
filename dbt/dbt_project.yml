@@ -1,0 +1,6 @@
+name: "marketing_hub"
+version: "1.0.0"
+profile: "marketing_hub"
+models:
+  marketing_hub:
+    +materialized: view

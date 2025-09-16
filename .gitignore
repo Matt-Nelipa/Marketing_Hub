@@ -1,0 +1,23 @@
+# os/editor
+.DS_Store
+.vscode/
+.idea/
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# env
+.env
+.env.*
+
+# dbt
+dbt/target/
+dbt/logs/
+
+# docker
+*.db

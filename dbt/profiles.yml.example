@@ -1,0 +1,12 @@
+marketing_hub:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      user: analytics
+      password: analytics
+      dbname: analytics
+      port: 5432
+      schema: analytics
+      threads: 4
