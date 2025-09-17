@@ -13,7 +13,6 @@ venv/
 
 # env
 .env
-.env.*
 
 # dbt
 dbt/target/
