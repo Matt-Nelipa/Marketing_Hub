@@ -1,0 +1,14 @@
+
+    
+    
+    
+    create table "analytics"."raw"."orders" (order_date date,order_id integer,customer_id text,revenue float8)
+  ;
+    -- dbt seed --
+    
+          insert into "analytics"."raw"."orders" (order_date, order_id, customer_id, revenue) values
+          (%s,%s,%s,%s),(%s,%s,%s,%s)
+      
+
+;
+  

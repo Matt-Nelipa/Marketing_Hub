@@ -1,0 +1,10 @@
+event_date,user_pseudo_id,event_name,event_value,session_id
+2025-08-20,u1,session_start,0,s1
+2025-08-20,u1,add_to_cart,0,s1
+2025-08-20,u1,purchase,120.50,s1
+2025-08-21,u2,session_start,0,s2
+2025-08-21,u2,purchase,75.00,s2
+2025-08-22,u3,session_start,0,s3
+2025-08-22,u3,add_to_cart,0,s3
+2025-08-23,u4,session_start,0,s4
+2025-08-24,u5,session_start,0,s5

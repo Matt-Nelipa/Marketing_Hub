@@ -1,0 +1,19 @@
+name: "marketing_hub"
+version: "1.0.0"
+profile: "marketing_hub"
+
+model-paths: ["dbt/models"]
+seed-paths: ["seeds"]
+macro-paths: ["dbt/macros"]
+
+models:
+  +materialized: view
+  marketing_hub:
+    staging:
+      +schema: staging
+    marts:
+      +schema: marts
+
+seeds:
+  +schema: raw
+  +quote_columns: false

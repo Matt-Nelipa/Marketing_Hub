@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: google_ads_spend
+      - name: fb_ads_spend
+      - name: ga4_events
+      - name: orders
+
+models:
+  - name: fct_marketing_spend_daily
+    columns:
+      - name: day
+        tests:
+          - not_null
+  - name: fct_site_events_daily
+    columns:
+      - name: day
+        tests:
+          - not_null
+          - unique
