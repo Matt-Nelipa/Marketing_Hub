@@ -1,0 +1,12 @@
+marketing_hub:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      user: "{{ env_var('PG_USER', 'analytics') }}"
+      password: "{{ env_var('PG_PASSWORD', 'analytics') }}"
+      dbname: "{{ env_var('PG_DB', 'analytics') }}"
+      port: 5432
+      schema: analytics
+      threads: 4
