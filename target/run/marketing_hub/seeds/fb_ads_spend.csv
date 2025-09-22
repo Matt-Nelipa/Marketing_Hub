@@ -1,9 +1,7 @@
 
     
     
-    
-    create table "analytics"."raw"."fb_ads_spend" (date date,campaign_id integer,campaign_name text,impressions integer,clicks integer,cost float8)
-  ;
+    truncate table "analytics"."raw"."fb_ads_spend";
     -- dbt seed --
     
           insert into "analytics"."raw"."fb_ads_spend" (date, campaign_id, campaign_name, impressions, clicks, cost) values
