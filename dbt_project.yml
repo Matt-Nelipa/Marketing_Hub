@@ -2,9 +2,9 @@ name: "marketing_hub"
 version: "1.0.0"
 profile: "marketing_hub"
 
-model-paths: ["dbt/models"]
+model-paths: ["models"]
 seed-paths: ["seeds"]
-macro-paths: ["dbt/macros"]
+macro-paths: ["macros"]
 
 models:
   +materialized: view

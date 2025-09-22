@@ -17,6 +17,8 @@ venv/
 # dbt
 dbt/target/
 dbt/logs/
+.user.yml
 
 # docker
 *.db
+dbt_internal_packages/
