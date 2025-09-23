@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DBT_PROFILES_DIR: ${{ github.workspace }}/dbt
+      DBT_PROFILES_DIR: ${{ github.workspace }}
       PG_USER:     ${{ secrets.PG_USER }}
       PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
       PG_DB:       ${{ secrets.PG_DB }}
