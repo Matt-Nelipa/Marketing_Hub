@@ -1,0 +1,44 @@
+name: CI
+on:
+  pull_request:
+    branches: ["main"]
+
+env:
+  PG_USER:     ${{ secrets.PG_USER }}
+  PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
+  PG_DB:       ${{ secrets.PG_DB }}
+
+jobs:
+  dbt-check:
+    runs-on: ubuntu-latest
+    env:
+      DBT_PROFILES_DIR: ${{ github.workspace }}
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER:     ${{ env.PG_USER }}
+          POSTGRES_PASSWORD: ${{ env.PG_PASSWORD }}
+          POSTGRES_DB:       ${{ env.PG_DB }}
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd="pg_isready -U ${{ env.PG_USER }} -d ${{ env.PG_DB }}"
+          --health-interval=5s
+          --health-timeout=3s
+          --health-retries=20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install "dbt-postgres==1.10.*"
+
+      - name: Run dbt (seed/run/test)
+        run: |
+          dbt seed --full-refresh
+          dbt run
+          dbt test
