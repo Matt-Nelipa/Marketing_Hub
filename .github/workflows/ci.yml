@@ -1,29 +1,29 @@
 name: CI
+
 on:
   pull_request:
     branches: ["main"]
 
-env:
-  PG_USER:     ${{ secrets.PG_USER }}
-  PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
-  PG_DB:       ${{ secrets.PG_DB }}
-
 jobs:
   dbt-check:
     runs-on: ubuntu-latest
+
     env:
       DBT_PROFILES_DIR: ${{ github.workspace }}
+      PG_USER:     ${{ secrets.PG_USER }}
+      PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
+      PG_DB:       ${{ secrets.PG_DB }}
 
     services:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER:     ${{ env.PG_USER }}
-          POSTGRES_PASSWORD: ${{ env.PG_PASSWORD }}
-          POSTGRES_DB:       ${{ env.PG_DB }}
+          POSTGRES_USER:     ${{ secrets.PG_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.PG_PASSWORD }}
+          POSTGRES_DB:       ${{ secrets.PG_DB }}
         ports: ["5432:5432"]
         options: >-
-          --health-cmd="pg_isready -U ${{ env.PG_USER }} -d ${{ env.PG_DB }}"
+          --health-cmd="pg_isready -U ${{ secrets.PG_USER }} -d ${{ secrets.PG_DB }}"
           --health-interval=5s
           --health-timeout=3s
           --health-retries=20
