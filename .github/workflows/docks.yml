@@ -1,0 +1,72 @@
+name: dbt Docs deploy
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      DBT_PROFILES_DIR: ${{ github.workspace }}
+      PG_USER:     ${{ secrets.PG_USER }}
+      PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
+      PG_DB:       ${{ secrets.PG_DB }}
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: analytics
+          POSTGRES_PASSWORD: analytics
+          POSTGRES_DB: analytics
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd="pg_isready -U analytics -d analytics"
+          --health-interval=5s
+          --health-timeout=3s
+          --health-retries=20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dbt
+        run: pip install dbt-core dbt-postgres
+
+      - name: Build project (seed/run)
+        run: |
+          dbt seed --full-refresh
+          dbt run
+
+      - name: Generate docs
+        run: dbt docs generate
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: target
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
